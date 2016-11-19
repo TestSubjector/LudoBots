@@ -4,6 +4,7 @@
 import random
 import copy
 import matplotlib.pyplot as plt
+from numpy import asarray
 
 #Defined Functions
 def MatrixCreate(Rows, Columns):
@@ -43,26 +44,46 @@ def VectAsLine(VL):
     plt.xlabel('Generation')
     plt.show()
 
-#Main Area
-#if __name__ == "__main__":
-
+#Main Area [So that functions are usable in other files]
+if __name__ == "__main__":
 
 #Serial Hill Climber
-def HillClimber():
-    parent = MatrixCreate(1, 50)
-    parent = MatrixRandomize(parent)
-    parentFitness = Fitness(parent)
-    vect = MatrixCreate(1, 5000)       #For Fitness Storage
+    def HillClimber(case):
+        parent = MatrixCreate(1, 50)
+        parent = MatrixRandomize(parent)
+        parentFitness = Fitness(parent)
+        vect = MatrixCreate(1, 5000)       #For Fitness Storage
+        genes = MatrixCreate(50, 5000)
 
-    for currentGeneration in range(5000):
-    #print(currentGeneration, parentFitness)
-        child = MatrixProb(parent, 0.05)
-        childFitness = Fitness(child)
-        if childFitness > parentFitness:
-            parent = child
-            parentFitness = childFitness
-        vect[currentGeneration] = parentFitness
-    return vect        
+        for currentGeneration in range(5000):
+           #print(currentGeneration, parentFitness)   #Checking Fitness
+            child = MatrixProb(parent, 0.05)
+            childFitness = Fitness(child)
 
-#Plot Fitness Growth
-VectAsLine(HillClimber())           
+            #Updating Parent
+            if childFitness > parentFitness:
+                parent = child
+                parentFitness = childFitness
+
+            #Updating Gene
+            for i in range(50):
+                genes[currentGeneration][i] = parent[i]
+
+            #Recording Fitness Growth
+            vect[currentGeneration] = parentFitness
+        
+        if case == 1:
+            return genes
+        else:
+            return vect
+
+    #Plot Genes
+    Gene = (asarray(HillClimber(1)).squeeze()).T    #Converting to array
+
+    plt.imshow(Gene, cmap = plt.cm.gray, aspect = 'auto', interpolation = 'nearest') 
+    #imshow works with only 2 dimensions (check via .ndim), so squeeze() is used
+
+    plt.show()
+
+    #Plot Fitness Growth
+    VectAsLine(HillClimber(2))
