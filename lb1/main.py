@@ -1,10 +1,11 @@
 '''The Hill Climber'''
 
+#Libraries
 import random
 import copy
-import matplotlib
+import matplotlib.pyplot as plt
 
-
+#Defined Functions
 def MatrixCreate(Rows, Columns):
     '''Intialize an array with element values being zero'''
     A = [[0 for x in range(Rows)] for y in range(Columns)]
@@ -36,18 +37,32 @@ def MatrixProb(P, Prob):
                 P_Copy[x][y] = random.random()
     return P_Copy
 
-#Sample for testing
+def VectAsLine(VL):
+    plt.plot(VL)
+    plt.ylabel('Fitness')
+    plt.xlabel('Generation')
+    plt.show()
 
-parent = MatrixCreate(1, 50)
-parent = MatrixRandomize(parent)
-parentFitness = Fitness(parent)
-
-for currentGeneration in range(5000):
-    print(currentGeneration, parentFitness)
-    child = MatrixProb(parent, 0.05)
-    childFitness = Fitness(child)
-    if childFitness > parentFitness:
-        parent = child
-        parentFitness = childFitness
+#Main Area
+#if __name__ == "__main__":
 
 
+#Serial Hill Climber
+def HillClimber():
+    parent = MatrixCreate(1, 50)
+    parent = MatrixRandomize(parent)
+    parentFitness = Fitness(parent)
+    vect = MatrixCreate(1, 5000)       #For Fitness Storage
+
+    for currentGeneration in range(5000):
+    #print(currentGeneration, parentFitness)
+        child = MatrixProb(parent, 0.05)
+        childFitness = Fitness(child)
+        if childFitness > parentFitness:
+            parent = child
+            parentFitness = childFitness
+        vect[currentGeneration] = parentFitness
+    return vect        
+
+#Plot Fitness Growth
+VectAsLine(HillClimber())           
