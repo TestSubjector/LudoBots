@@ -9,7 +9,7 @@ My work projects for the evolutionary robotics project - Ludobots, based complet
 - [X] Core01 - *Hill Climber*
 - [X] Core02 - *First Neural Network*
 - [ ] Core03
-= [ ] Core04 
+- [ ] Core04 
 
 ...
 
