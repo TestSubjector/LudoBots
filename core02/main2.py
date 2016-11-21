@@ -6,6 +6,7 @@ import random
 import math
 import matplotlib.pyplot as plt
 
+
 #Defined Functions
 def InitialValues(Matrix):
     '''Give Neurons Initial Values'''
@@ -24,12 +25,14 @@ def NeuronPositions(Matrix, Num):
         angle = angle + angleUpdate
     return Matrix
 
+
 def Plotting(Matrix, Num):
     '''Plot Postition On Graph'''
     for i in range(Num):
         plt.plot(Matrix[i][0], Matrix[i][1],
                  'ko', markerfacecolor=[1, 1, 1], markersize=18)
     return None
+
 
 def Connections(Matrix, Num):
     '''Plotting Positions & Conections on Graph'''
@@ -38,6 +41,31 @@ def Connections(Matrix, Num):
         for others in range(base, Num):
             plt.plot([Matrix[base][0], Matrix[others][0]], [Matrix[base][1], Matrix[others][1]])
 
+
+def Weight_Con(Matrix, Num, Sign, Path):        #Path For Respective Deliverable
+    '''Plotting Positions & Health(+/-) of Conections on Graph'''
+    if Path == 1:
+        for ele1 in range(Num):
+            for ele2 in range(Num):
+                if Sign[ele1][ele2] < 0:
+                    plt.plot([Matrix[ele1][0], Matrix[ele2][0]], [Matrix[ele1][1],
+                             Matrix[ele2][1]], color=[0.8, 0.8, 0.8])
+                else:
+                    plt.plot([Matrix[ele1][0], Matrix[ele2][0]], [Matrix[ele1][1],
+                             Matrix[ele2][1]], color=[0, 0, 0])
+    else:
+        for ele1 in range(Num):
+            for ele2 in range(Num):
+                w = int(10 * abs(Sign[ele1][ele2]))+1
+                if Sign[ele1][ele2] < 0:
+                    plt.plot([Matrix[ele1][0], Matrix[ele2][0]], [Matrix[ele1][1],
+                             Matrix[ele2][1]], color=[0.8, 0.8, 0.8], linewidth=w)
+                else:
+                    plt.plot([Matrix[ele1][0], Matrix[ele2][0]], [Matrix[ele1][1],
+                             Matrix[ele2][1]], color=[0, 0, 0], linewidth=w)
+
+
+
 #Main
 if __name__ == "__main__":
 
@@ -45,7 +73,7 @@ if __name__ == "__main__":
     Num_Neu = 10
 
     '''Neuron Centre'''
-    Neu_Values = MatrixCreate(Num_Neu,50)
+    Neu_Values = MatrixCreate(Num_Neu, 50)
     Neu_Values = InitialValues(Neu_Values)
 
     '''Neurons Positions in 2D'''
@@ -63,6 +91,13 @@ if __name__ == "__main__":
     Connections(Neu_Positions, Num_Neu)
     plt.show()
 
+    '''Delivarable #3'''
+    Weight_Con(Neu_Positions, Num_Neu, Synapses, 1)
+    plt.show()
+    
+    '''Deliverable #4'''
+    Weight_Con(Neu_Positions, Num_Neu, Synapses, 2)
+    plt.show()
 
 
 
