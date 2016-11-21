@@ -56,7 +56,7 @@ def Weight_Con(Matrix, Num, Sign, Path):        #Path For Respective Deliverable
     else:
         for ele1 in range(Num):
             for ele2 in range(Num):
-                w = int(10 * abs(Sign[ele1][ele2]))+1
+                w = int(10 * abs(Sign[ele1][ele2])) + 1
                 if Sign[ele1][ele2] < 0:
                     plt.plot([Matrix[ele1][0], Matrix[ele2][0]], [Matrix[ele1][1],
                              Matrix[ele2][1]], color=[0.8, 0.8, 0.8], linewidth=w)
@@ -65,11 +65,26 @@ def Weight_Con(Matrix, Num, Sign, Path):        #Path For Respective Deliverable
                              Matrix[ele2][1]], color=[0, 0, 0], linewidth=w)
 
 
+def Neu_Update(Neurons, Weight, Count, Num):
+    '''Updating Neuron Values & Storing Progression'''
+    for ele1 in range(Num):
+        #To store new neuron value
+        Temp = 0.0  
+        for ele2 in range(Num):
+            Temp += Neurons[Count][ele2] * Weight[ele1][ele2]
+        if Temp < 0:
+            Temp = 0
+        elif Temp > 1:
+            Temp = 1
+        Neurons[Count+1][ele1] = Temp
+    return Neurons
+
+ 
 
 #Main
 if __name__ == "__main__":
 
-    '''Number of Neurons'''
+    '''Number of Neurons [Can be different then 10] [Increasing Versatility]'''
     Num_Neu = 10
 
     '''Neuron Centre'''
@@ -94,11 +109,15 @@ if __name__ == "__main__":
     '''Delivarable #3'''
     Weight_Con(Neu_Positions, Num_Neu, Synapses, 1)
     plt.show()
-    
+
     '''Deliverable #4'''
     Weight_Con(Neu_Positions, Num_Neu, Synapses, 2)
     plt.show()
-
+    
+    '''Deliverable 5 [Important]'''
+    for Next in range(49):
+        Neu_Values = Neu_Update(Neu_Values, Synapses, Next, Num_Neu)
+    ImShow(Neu_Values)
 
 
 
