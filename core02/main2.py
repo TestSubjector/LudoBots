@@ -24,6 +24,20 @@ def NeuronPositions(Matrix, Num):
         angle = angle + angleUpdate
     return Matrix
 
+def Plotting(Matrix, Num):
+    '''Plot Postition On Graph'''
+    for i in range(Num):
+        plt.plot(Matrix[i][0], Matrix[i][1],
+                 'ko', markerfacecolor=[1, 1, 1], markersize=18)
+    return None
+
+def Connections(Matrix, Num):
+    '''Plotting Positions & Conections on Graph'''
+    Plotting(Matrix, Num)
+    for base in range(Num):
+        for others in range(base, Num):
+            plt.plot([Matrix[base][0], Matrix[others][0]], [Matrix[base][1], Matrix[others][1]])
+
 #Main
 if __name__ == "__main__":
 
@@ -38,6 +52,16 @@ if __name__ == "__main__":
     Neu_Positions = MatrixCreate(2, Num_Neu)
     Neu_Positions = NeuronPositions(Neu_Positions, Num_Neu)
 
+    '''Synapses Apparently'''
+    Synapses = [[random.uniform(-1, 1) for x in range(Num_Neu)] for y in range(Num_Neu)]
+
+    '''Deliverable #1'''
+    Plotting(Neu_Positions, Num_Neu)
+    plt.show()
+
+    '''Deliverable #2'''
+    Connections(Neu_Positions, Num_Neu)
+    plt.show()
 
 
 
