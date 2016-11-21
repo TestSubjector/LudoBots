@@ -44,6 +44,13 @@ def VectAsLine(VL):
     plt.ylabel('Fitness')
     plt.xlabel('Generation')
 
+def ImShow(Gen):
+    '''Show Statistical Image'''
+    plt.imshow(Gen, cmap = plt.cm.gray, aspect = 'auto', interpolation = 'nearest') 
+    #imshow works with only 2 dimensions (check via .ndim), so squeeze() is used
+    plt.show()
+    
+
 def HillClimber(case):
     '''Serial Hill Climber'''
     parent = MatrixCreate(1, 50)
@@ -89,7 +96,6 @@ if __name__ == "__main__":
     #Plot Genes [Deliverable #3]
     #Converting to array
     Gene = (asarray(HillClimber(1)).squeeze()).T
+    ImShow(Gene)
 
-    plt.imshow(Gene, cmap = plt.cm.gray, aspect = 'auto', interpolation = 'nearest') 
-    #imshow works with only 2 dimensions (check via .ndim), so squeeze() is used
-    plt.show()
+
