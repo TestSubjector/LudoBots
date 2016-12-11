@@ -8,7 +8,7 @@ My work projects for the evolutionary robotics project - Ludobots, based complet
 >####Coded Task
 - [X] Core01 - *Hill Climber*
 - [X] Core02 - *First Neural Network*
-- [ ] Core03
+- [X] Core03 - *Evolving a Neural Network*
 - [ ] Core04 
 
 ...
