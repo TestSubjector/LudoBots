@@ -1,101 +1,104 @@
 '''The Hill Climber'''
 
-#Libraries
+# Libraries
 import random
 import copy
 import matplotlib.pyplot as plt
 from numpy import asarray
 
-#Defined Functions
-def MatrixCreate(Rows, Columns):
+
+# Defined Functions
+def matrix_create(rows, columns):
     '''Intialize an array with element values being zero'''
-    A = [[0 for x in range(Rows)] for y in range(Columns)]
-    return A
+    mat = [[0 for x in range(rows)] for y in range(columns)]
+    return mat
 
 
-def MatrixRandomize(V):
+def matrix_randomize(mat):
     ''' Get a random value between 0 & 1 back'''
-    for x in range(len(V)):
-        for y in range(len(V[x])):
-            V[x][y] = random.random()
-    return V
+    for xenum in range(len(mat)):
+        for yenum in range(len(mat[xenum])):
+            mat[xenum][yenum] = random.random()
+    return mat
 
-def Fitness(W):
+
+def fitness(mat):
     '''Finding Mean of Elements'''
     store = 0
-    for x in range(len(W)):
-        for y in range(len(W[x])):
-            store += W[x][y]
-    store = store / len(W)
+    for xenum in range(len(mat)):
+        for yenum in range(len(mat[xenum])):
+            store += mat[xenum][yenum]
+    store = store / len(mat)
     return store
 
-def MatrixProb(P, Prob):
-    '''Assign different value based on probability'''
-    P_Copy = copy.deepcopy(P)
-    for x in range(len(P_Copy)):
-        for y in range(len(P_Copy[x])):
-            if Prob > random.random():
-                P_Copy[x][y] = random.random()
-    return P_Copy
 
-def VectAsLine(VL):
+def matrix_prob(pmat, prob):
+    '''Assign different value based on probability'''
+    p_copy = copy.deepcopy(pmat)
+    for xenum in range(len(p_copy)):
+        for yenum in range(len(p_copy[xenum])):
+            if prob > random.random():
+                p_copy[xenum][yenum] = random.random()
+    return p_copy
+
+
+def vect_asline(mat):
     '''Graph Plotter'''
-    plt.plot(VL)
+    plt.plot(mat)
     plt.ylabel('Fitness')
     plt.xlabel('Generation')
 
-def ImShow(Gen):
+
+def imshow(gen):
     '''Show Statistical Image'''
-    plt.imshow(Gen, cmap = plt.cm.gray, aspect = 'auto', interpolation = 'nearest') 
-    #imshow works with only 2 dimensions (check via .ndim), so squeeze() is used
+    plt.imshow(gen, cmap=plt.cm.gray, aspect='auto', interpolation='nearest')
+    # imshow works with only 2 dimensions (check via .ndim), so squeeze() used
     plt.show()
-    
 
-def HillClimber(case):
+
+def hill_climber(case):
     '''Serial Hill Climber'''
-    parent = MatrixCreate(1, 50)
-    parent = MatrixRandomize(parent)
-    parentFitness = Fitness(parent)
-    vect = MatrixCreate(1, 5000)       #For Fitness Storage
-    genes = MatrixCreate(50, 5000)
+    parent = matrix_create(1, 50)
+    parent = matrix_randomize(parent)
+    parent_fitness = fitness(parent)
+    vect = matrix_create(1, 5000)       # For Fitness Storage
+    genes = matrix_create(50, 5000)
 
-    for currentGeneration in range(5000):
-       #print(currentGeneration, parentFitness)   #Checking Fitness
-        child = MatrixProb(parent, 0.05)
-        childFitness = Fitness(child)
+    for current_generation in range(5000):
+        # print(current_generation, parent_fitness)   # Checking Fitness
+        child = matrix_prob(parent, 0.05)
+        child_fitness = fitness(child)
 
-        #Updating Parent
-        if childFitness > parentFitness:
+        # Updating Parent
+        if child_fitness > parent_fitness:
             parent = child
-            parentFitness = childFitness
+            parent_fitness = child_fitness
 
-        #Updating Gene
+        # Updating Gene
         for i in range(50):
-            genes[currentGeneration][i] = parent[i]
+            genes[current_generation][i] = parent[i]
 
-        #Recording Fitness Growth
-        vect[currentGeneration] = parentFitness
+        # Recording Fitness Growth
+        vect[current_generation] = parent_fitness
 
     if case == 1:
         return genes
     else:
         return vect
 
-#Main Area [So that functions are usable in other files]
+# Main Area [So that functions are usable in other files]
 if __name__ == "__main__":
 
-    #Plot Fitness Growth [Deliverable #1]
-    VectAsLine(HillClimber(2))
+    # Plot Fitness Growth [Deliverable #1]
+    vect_asline(hill_climber(2))
     plt.show()
 
-    #Plot Multiple Cycles of Fitness Growth [Deliverable #2]
+    # Plot Multiple Cycles of Fitness Growth [Deliverable #2]
     for cycle in range(5):
-        VectAsLine(HillClimber(2))
+        vect_asline(hill_climber(2))
     plt.show()
 
-    #Plot Genes [Deliverable #3]
-    #Converting to array
-    Gene = (asarray(HillClimber(1)).squeeze()).T
-    ImShow(Gene)
-
-
+    # Plot Genes [Deliverable #3]
+    # Converting to array
+    GENE = (asarray(hill_climber(1)).squeeze()).T
+    imshow(GENE)
