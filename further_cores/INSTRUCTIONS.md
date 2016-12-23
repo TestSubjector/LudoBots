@@ -3,6 +3,9 @@ To run a core, copy the contents of that core into the Demos/RagdollDemos in the
 
 Then compile with 
 > make clean
+
 > make
+
 And run with
+
 > ./AppRagdollDemo
