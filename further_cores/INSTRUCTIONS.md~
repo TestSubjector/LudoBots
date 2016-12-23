@@ -1,0 +1,6 @@
+The original unaltered copy is reserve.
+To run a core, copy the contents of that core into main/Demos/RagdollDemo
+Then compile with 
+> make
+And run with
+> ./AppRagdollDemo
